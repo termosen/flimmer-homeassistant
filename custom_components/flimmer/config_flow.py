@@ -61,6 +61,11 @@ class FlimmerConfigFlow(ConfigFlow, domain=DOMAIN):
         server_id = props.get("id")
         if not server_id:
             return self.async_abort(reason="not_flimmer")
+        # A member of a Flimmer network is set up through the network's main
+        # server, which every member names: only that one is offered.
+        primary = props.get("primary")
+        if primary and primary != server_id:
+            return self.async_abort(reason="not_primary")
         host = discovery_info.host
         port = props.get("port") or discovery_info.port
         await self.async_set_unique_id(server_id)

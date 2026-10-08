@@ -5,7 +5,10 @@
       "user": {
         "title": "Flimmer",
         "description": "Your Flimmer server ({name}). Make a key in Flimmer: Settings → Mine → Keys.",
-        "data": { "url": "Address", "api_key": "Key" },
+        "data": {
+          "url": "Address",
+          "api_key": "Key"
+        },
         "data_description": {
           "url": "The server's address, e.g. http://192.168.1.10:8080",
           "api_key": "A personal key, starting flimmer_"
@@ -14,7 +17,9 @@
       "reauth_confirm": {
         "title": "Flimmer refused the key",
         "description": "Make a new key in Flimmer: Settings → Mine → Keys.",
-        "data": { "api_key": "Key" }
+        "data": {
+          "api_key": "Key"
+        }
       }
     },
     "error": {
@@ -25,28 +30,59 @@
     "abort": {
       "already_configured": "This server is set up already.",
       "reauth_successful": "The new key works.",
-      "not_flimmer": "That is not a Flimmer server."
+      "not_flimmer": "That is not a Flimmer server.",
+      "not_primary": "This server is part of a Flimmer network: it is set up through the network's main server."
     }
   },
   "entity": {
     "sensor": {
-      "streams": { "name": "Streams" },
-      "now_playing": { "name": "Now playing" },
-      "players": { "name": "Players on" },
-      "films": { "name": "Films" },
-      "series": { "name": "Series" },
-      "albums": { "name": "Albums" },
-      "newest": { "name": "Newest title" },
-      "provider_holder": { "name": "IPTV held by" },
-      "transcoding": { "name": "Transcoding" },
-      "cpu": { "name": "CPU" },
-      "memory": { "name": "Memory" }
+      "streams": {
+        "name": "Streams"
+      },
+      "now_playing": {
+        "name": "Now playing"
+      },
+      "players": {
+        "name": "Players on"
+      },
+      "films": {
+        "name": "Films"
+      },
+      "series": {
+        "name": "Series"
+      },
+      "albums": {
+        "name": "Albums"
+      },
+      "newest": {
+        "name": "Newest title"
+      },
+      "provider_holder": {
+        "name": "IPTV held by"
+      },
+      "transcoding": {
+        "name": "Transcoding"
+      },
+      "cpu": {
+        "name": "CPU"
+      },
+      "memory": {
+        "name": "Memory"
+      }
     },
     "binary_sensor": {
-      "watching": { "name": "Watching" },
-      "watching_live": { "name": "Watching live TV" },
-      "provider_here": { "name": "Holds the IPTV provider" },
-      "network": { "name": "All servers online" }
+      "watching": {
+        "name": "Watching"
+      },
+      "watching_live": {
+        "name": "Watching live TV"
+      },
+      "provider_here": {
+        "name": "Holds the IPTV provider"
+      },
+      "network": {
+        "name": "All servers online"
+      }
     }
   },
   "services": {
@@ -54,23 +90,56 @@
       "name": "Play",
       "description": "Play a film, an episode, a channel or an event on a player.",
       "fields": {
-        "server": { "name": "Server", "description": "Which Flimmer server, where there are several." },
-        "player": { "name": "Player", "description": "The player's name, e.g. Office. May be left out when only one is on." },
-        "title_id": { "name": "Title", "description": "A film or episode id." },
-        "channel_id": { "name": "Channel", "description": "A channel or event id." },
-        "from_start": { "name": "From the start", "description": "Not from where it was left." }
+        "server": {
+          "name": "Server",
+          "description": "Which Flimmer server, where there are several."
+        },
+        "player": {
+          "name": "Player",
+          "description": "The player's name, e.g. Office. May be left out when only one is on."
+        },
+        "title_id": {
+          "name": "Title",
+          "description": "A film or episode id."
+        },
+        "channel_id": {
+          "name": "Channel",
+          "description": "A channel or event id."
+        },
+        "from_start": {
+          "name": "From the start",
+          "description": "Not from where it was left."
+        }
       }
     },
     "play_music": {
       "name": "Play music",
       "description": "Play an album, an artist or a track on a player.",
       "fields": {
-        "server": { "name": "Server", "description": "Which Flimmer server, where there are several." },
-        "player": { "name": "Player", "description": "The player's name." },
-        "album_id": { "name": "Album", "description": "An album id." },
-        "artist_id": { "name": "Artist", "description": "An artist id." },
-        "track_id": { "name": "Track", "description": "A track id; the rest of its album follows." },
-        "shuffle": { "name": "Shuffle", "description": "In random order." }
+        "server": {
+          "name": "Server",
+          "description": "Which Flimmer server, where there are several."
+        },
+        "player": {
+          "name": "Player",
+          "description": "The player's name."
+        },
+        "album_id": {
+          "name": "Album",
+          "description": "An album id."
+        },
+        "artist_id": {
+          "name": "Artist",
+          "description": "An artist id."
+        },
+        "track_id": {
+          "name": "Track",
+          "description": "A track id; the rest of its album follows."
+        },
+        "shuffle": {
+          "name": "Shuffle",
+          "description": "In random order."
+        }
       }
     }
   }
