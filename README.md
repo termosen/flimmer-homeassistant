@@ -5,7 +5,7 @@
 The household's Flimmer server in Home Assistant: what plays where, whether
 the server holds the IPTV provider, the library, the transcoders -- updated
 the moment the server says something changed -- and the televisions with
-Flimmer open as media players, to pause, resume and stop.
+Flimmer open as media players (films, episodes, channels and music, with artist and album), to pause, resume and stop.
 
 ## Install
 
@@ -27,7 +27,7 @@ and restart Home Assistant.
 - Sensors: Streams (with every session as an attribute), Now playing,
   Players on, Films, Series, Albums, Newest title, IPTV held by; for an
   admin's key also Transcoding, CPU and Memory.
-- Binary sensors: Watching, Watching live TV, Holds the IPTV provider,
+- Binary sensors: Watching, Watching live TV, Playing music, Holds the IPTV provider,
   All servers online.
 - A media player for each television where Flimmer is open: playing, paused,
   idle (open, nothing playing) or off; pause, play, stop, next and previous.

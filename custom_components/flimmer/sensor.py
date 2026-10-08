@@ -23,7 +23,10 @@ class FlimmerSensorDescription(SensorEntityDescription):
 
 
 def _playing(d: dict[str, Any]) -> str:
-    titles = [s.get("title", "") for s in d.get("sessions", [])]
+    titles = [
+        f"{s.get('title', '')} -- {s['artist']}" if s.get("kind") == "music" and s.get("artist") else s.get("title", "")
+        for s in d.get("sessions", [])
+    ]
     return ", ".join(t for t in titles if t)[:250] or "Nothing"
 
 

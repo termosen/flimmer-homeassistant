@@ -96,7 +96,20 @@ class FlimmerPlayer(CoordinatorEntity[FlimmerCoordinator], MediaPlayerEntity):
         s = self._session()
         if not s:
             return None
-        return MediaType.CHANNEL if s.get("kind") == "live" else MediaType.VIDEO
+        kind = s.get("kind")
+        if kind == "music":
+            return MediaType.MUSIC
+        return MediaType.CHANNEL if kind == "live" else MediaType.VIDEO
+
+    @property
+    def media_artist(self) -> str | None:
+        s = self._session()
+        return (s.get("artist") or None) if s else None
+
+    @property
+    def media_album_name(self) -> str | None:
+        s = self._session()
+        return (s.get("album") or None) if s else None
 
     @property
     def extra_state_attributes(self) -> dict[str, Any] | None:

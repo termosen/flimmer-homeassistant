@@ -82,6 +82,9 @@
       },
       "network": {
         "name": "All servers online"
+      },
+      "playing_music": {
+        "name": "Playing music"
       }
     }
   },

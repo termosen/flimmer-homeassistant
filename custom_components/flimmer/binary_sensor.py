@@ -33,6 +33,10 @@ BINARY: tuple[FlimmerBinaryDescription, ...] = (
         value=lambda d: any(s.get("kind") == "live" for s in d.get("sessions", [])),
     ),
     FlimmerBinaryDescription(
+        key="playing_music", translation_key="playing_music", icon="mdi:music",
+        value=lambda d: any(s.get("kind") == "music" for s in d.get("sessions", [])),
+    ),
+    FlimmerBinaryDescription(
         key="provider_here", translation_key="provider_here", icon="mdi:satellite-uplink",
         value=lambda d: bool(d.get("server", {}).get("provider_here")),
     ),
