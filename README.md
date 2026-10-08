@@ -1,3 +1,5 @@
+<img src="icon.png" alt="Flimmer" width="96" align="right">
+
 # Flimmer for Home Assistant
 
 The household's Flimmer server in Home Assistant: what plays where, whether
