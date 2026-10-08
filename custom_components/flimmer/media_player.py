@@ -82,8 +82,11 @@ class FlimmerPlayer(CoordinatorEntity[FlimmerCoordinator], MediaPlayerEntity):
     @property
     def state(self) -> MediaPlayerState:
         on = any(p.get("id") == self._id for p in self.coordinator.data.get("players", []))
-        if self._session():
-            return MediaPlayerState.PAUSED if self._paused else MediaPlayerState.PLAYING
+        session = self._session()
+        if session:
+            # Paused as the television says, or as paused from here a moment
+            # ago, before it has said so.
+            return MediaPlayerState.PAUSED if (session.get("paused") or self._paused) else MediaPlayerState.PLAYING
         return MediaPlayerState.IDLE if on else MediaPlayerState.OFF
 
     @property
@@ -120,7 +123,11 @@ class FlimmerPlayer(CoordinatorEntity[FlimmerCoordinator], MediaPlayerEntity):
 
     @callback
     def _handle_coordinator_update(self) -> None:
-        if not self._session():
+        # Music: the television says itself whether it is paused, and that
+        # wins over what was pressed here. A film: kept as pressed, until it
+        # ends.
+        session = self._session()
+        if not session or session.get("kind") == "music":
             self._paused = False
         super()._handle_coordinator_update()
 
