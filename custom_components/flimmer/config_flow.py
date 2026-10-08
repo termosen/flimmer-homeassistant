@@ -44,7 +44,8 @@ class FlimmerConfigFlow(ConfigFlow, domain=DOMAIN):
                 await self.async_set_unique_id(server["id"])
                 self._abort_if_unique_id_configured(updates={CONF_URL: url})
                 return self.async_create_entry(
-                    title=server.get("name") or "Flimmer", data={CONF_URL: url, CONF_KEY: user_input[CONF_KEY].strip()}
+                    title=server.get("name") or "Flimmer",
+                    data={CONF_URL: url, CONF_KEY: user_input[CONF_KEY].strip(), "net": server.get("network", "")},
                 )
             errors["base"] = error or "unknown"
         return self.async_show_form(
@@ -66,6 +67,17 @@ class FlimmerConfigFlow(ConfigFlow, domain=DOMAIN):
         primary = props.get("primary")
         if primary and primary != server_id:
             return self.async_abort(reason="not_primary")
+        # And once one of a network is set up, its other members are not
+        # offered -- even one on a build too old to name its main server.
+        net = props.get("net")
+        if net:
+            for entry in self._async_current_entries(include_ignore=False):
+                known = entry.data.get("net")
+                coordinator = getattr(entry, "runtime_data", None)
+                if not known and coordinator is not None and coordinator.data:
+                    known = coordinator.data.get("server", {}).get("network")
+                if known == net and entry.unique_id != server_id:
+                    return self.async_abort(reason="not_primary")
         host = discovery_info.host
         port = props.get("port") or discovery_info.port
         await self.async_set_unique_id(server_id)

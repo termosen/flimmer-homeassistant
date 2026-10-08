@@ -91,6 +91,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: FlimmerConfigEntry) -> b
     coordinator = FlimmerCoordinator(hass, entry, api)
     await coordinator.async_config_entry_first_refresh()
     entry.runtime_data = coordinator
+    # Which Flimmer network the server is in, kept with the entry: its other
+    # members are then not offered when found (config_flow.py).
+    network = coordinator.data["server"].get("network", "")
+    if entry.data.get("net") != network:
+        hass.config_entries.async_update_entry(entry, data={**entry.data, "net": network})
     # The server as a device before anything of it: the players are
     # connected through it, and it must be there for them to say so.
     server = coordinator.data["server"]
