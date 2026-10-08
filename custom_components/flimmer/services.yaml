@@ -1,0 +1,53 @@
+play:
+  fields:
+    server:
+      example: Avig
+      selector:
+        text:
+    player:
+      example: Office
+      selector:
+        text:
+    title_id:
+      example: 1689
+      selector:
+        number:
+          min: 1
+          max: 999999999
+          mode: box
+    channel_id:
+      example: 2648859
+      selector:
+        number:
+          min: 1
+          max: 999999999
+          mode: box
+    from_start:
+      default: false
+      selector:
+        boolean:
+play_music:
+  fields:
+    server:
+      selector:
+        text:
+    player:
+      example: Office
+      selector:
+        text:
+    album_id:
+      selector:
+        text:
+    artist_id:
+      selector:
+        text:
+    track_id:
+      selector:
+        number:
+          min: 1
+          max: 999999999
+          mode: box
+    shuffle:
+      default: false
+      selector:
+        boolean:
