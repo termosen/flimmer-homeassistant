@@ -115,3 +115,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: FlimmerConfigEntry) -> b
 
 async def async_unload_entry(hass: HomeAssistant, entry: FlimmerConfigEntry) -> bool:
     return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+
+
+async def async_remove_config_entry_device(
+    hass: HomeAssistant, entry: FlimmerConfigEntry, device: dr.DeviceEntry
+) -> bool:
+    """A player that is gone can be deleted; the server and players on now cannot."""
+    coordinator = entry.runtime_data
+    here = {(DOMAIN, coordinator.data["server"]["id"])}
+    here |= {(DOMAIN, f"player-{p['id']}") for p in coordinator.data.get("players", []) if p.get("id")}
+    return not (device.identifiers & here)
