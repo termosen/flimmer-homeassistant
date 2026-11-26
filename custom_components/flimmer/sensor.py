@@ -43,9 +43,11 @@ SENSORS: tuple[FlimmerSensorDescription, ...] = (
         # at Disconnected for good (26 Nov, the admin).
         key="servers_online", translation_key="servers_online", icon="mdi:server-network",
         state_class=SensorStateClass.MEASUREMENT,
-        value=lambda d: sum(1 for p in d.get("server", {}).get("linked", []) if p.get("online")),
+        # This server counts too: it answered, so it is online (the admin:
+        # "says 2 servers online. But it's 3").
+        value=lambda d: 1 + sum(1 for p in d.get("server", {}).get("linked", []) if p.get("online")),
         attributes=lambda d: {
-            "linked": len(d.get("server", {}).get("linked", [])),
+            "servers_in_network": 1 + len(d.get("server", {}).get("linked", [])),
             "offline": [p.get("name") for p in d.get("server", {}).get("linked", []) if not p.get("online")],
             "servers": d.get("server", {}).get("linked", []),
         },
