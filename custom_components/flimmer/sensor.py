@@ -38,6 +38,19 @@ SENSORS: tuple[FlimmerSensorDescription, ...] = (
         attributes=lambda d: {"sessions": d.get("sessions", [])},
     ),
     FlimmerSensorDescription(
+        # How many of the linked servers answer, a number rather than one
+        # yes/no: a backup that is off on purpose kept "All servers online"
+        # at Disconnected for good (26 Nov, the admin).
+        key="servers_online", translation_key="servers_online", icon="mdi:server-network",
+        state_class=SensorStateClass.MEASUREMENT,
+        value=lambda d: sum(1 for p in d.get("server", {}).get("linked", []) if p.get("online")),
+        attributes=lambda d: {
+            "linked": len(d.get("server", {}).get("linked", [])),
+            "offline": [p.get("name") for p in d.get("server", {}).get("linked", []) if not p.get("online")],
+            "servers": d.get("server", {}).get("linked", []),
+        },
+    ),
+    FlimmerSensorDescription(
         key="now_playing", translation_key="now_playing", icon="mdi:television-play",
         value=_playing,
     ),

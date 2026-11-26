@@ -68,6 +68,9 @@
       },
       "memory": {
         "name": "Memory"
+      },
+      "servers_online": {
+        "name": "Servers online"
       }
     },
     "binary_sensor": {
@@ -79,9 +82,6 @@
       },
       "provider_here": {
         "name": "Holds the IPTV provider"
-      },
-      "network": {
-        "name": "All servers online"
       },
       "playing_music": {
         "name": "Playing music"

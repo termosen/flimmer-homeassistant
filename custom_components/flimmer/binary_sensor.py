@@ -40,10 +40,6 @@ BINARY: tuple[FlimmerBinaryDescription, ...] = (
         key="provider_here", translation_key="provider_here", icon="mdi:satellite-uplink",
         value=lambda d: bool(d.get("server", {}).get("provider_here")),
     ),
-    FlimmerBinaryDescription(
-        key="network", translation_key="network", device_class=BinarySensorDeviceClass.CONNECTIVITY,
-        value=lambda d: all(p.get("online") for p in d.get("server", {}).get("linked", [])),
-    ),
 )
 
 
@@ -66,6 +62,4 @@ class FlimmerBinary(FlimmerEntity, BinarySensorEntity):
 
     @property
     def extra_state_attributes(self) -> dict[str, Any] | None:
-        if self.entity_description.key == "network":
-            return {"servers": self.coordinator.data.get("server", {}).get("linked", [])}
         return None
