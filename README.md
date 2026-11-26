@@ -31,6 +31,17 @@ and restart Home Assistant.
   All servers online.
 - A media player for each television where Flimmer is open: playing, paused,
   idle (open, nothing playing) or off; pause, play, stop, next and previous.
+  It says what plays as Home Assistant's media card shows it: a film, an
+  episode (series, season and episode under the episode's title), a channel
+  (what is on, with the channel's name) or music (artist and album); the
+  poster, season poster, channel logo or album cover, fetched from the
+  server with the key and passed on by Home Assistant's own proxy; and the
+  timeline (a channel's: the programme on now). Attributes: quality
+  ("4K · Dolby Vision 8.1 · HDR10+"), playback (Direct play, Re-wrap or
+  Transcode) and the transcoder, video codec, resolution, audio
+  ("Dolby Digital Plus + Dolby Atmos · 5.1 · English · 768 kb/s"), audio
+  language, subtitles, bitrate, user and profile. Needs a Flimmer server
+  from 26 November 2026 or later; an older one shows title and kind as before.
 - Services `flimmer.play` (title_id or channel_id, on a player) and
   `flimmer.play_music` (album_id, artist_id or track_id).
 - An event `flimmer_change` on every change the server tells about (type:

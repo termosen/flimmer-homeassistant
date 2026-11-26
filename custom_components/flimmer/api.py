@@ -6,6 +6,7 @@ import asyncio
 import json
 import logging
 from typing import Any, AsyncIterator
+from urllib.parse import urlsplit
 
 import aiohttp
 
@@ -45,6 +46,37 @@ class FlimmerApi:
                 return await resp.json()
         except (aiohttp.ClientError, asyncio.TimeoutError) as err:
             raise FlimmerError(str(err)) from err
+
+    def image_url(self, image: str | None) -> str | None:
+        """A picture's address on this server, as the server named it (one of
+        its own: /api/images/..., /api/logo-proxy?..., /api/music/cover?...).
+
+        Always made on the address the integration was set up with, so the
+        key, sent with it by image(), never goes anywhere else -- an address
+        on another host is no picture at all."""
+        if not image:
+            return None
+        parts = urlsplit(image)
+        if not parts.path.startswith("/api/"):
+            return None
+        return self.url + parts.path + (f"?{parts.query}" if parts.query else "")
+
+    async def image(self, url: str) -> tuple[bytes | None, str | None]:
+        """A picture of the server's, fetched with the key in a header."""
+        if not url.startswith(self.url + "/api/"):
+            return None, None
+        try:
+            async with self._session.get(
+                url, headers=self._headers, timeout=aiohttp.ClientTimeout(total=15)
+            ) as resp:
+                if resp.status != 200:
+                    return None, None
+                content_type = resp.headers.get("Content-Type", "image/jpeg").split(";")[0].strip()
+                if not content_type.startswith("image/"):
+                    return None, None
+                return await resp.read(), content_type
+        except (aiohttp.ClientError, asyncio.TimeoutError):
+            return None, None
 
     async def command(self, tool: str, arguments: dict[str, Any]) -> dict[str, Any]:
         """A command, as Claude sends it: play, pause, resume, stop, play_music, next_track, previous_track."""
